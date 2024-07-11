@@ -1,0 +1,78 @@
+version: "3.8"
+services:
+  inference:
+    container_name: inference-hf
+    build:
+      context: .
+      dockerfile: Dockerfile_inference
+    command: python -u /app/app.py
+    ports:
+      - "8000:8000"
+  init_faceworker:
+    container_name: init_faceworker
+    image: alloranetwork/allora-chain:latest
+    volumes:
+      - ./data:/data
+    entrypoint: /data/scripts/init.sh
+
+  faceworker:
+    container_name: faceworker
+    build: .
+    command:
+      - allora-node
+      - --role=worker
+      - --peer-db=/data/worker/peer-database
+      - --function-db=/data/worker/function-database
+      - --runtime-path=/app/runtime
+      - --runtime-cli=bls-runtime
+      - --workspace=/data/worker/workspace
+      - --private-key=/data/worker/key/priv.bin
+      - --log-level=debug
+      - --port=9010
+      - --boot-nodes=/dns4/head-0-p2p.edgenet.allora.network/tcp/32050/p2p/12D3KooWQgcJ4wiHBWE6H9FxZAVUn84ZAmywQdRk83op2EibWTiZ
+      - --topic=allora-topic-2-worker
+      - --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/
+      - --allora-chain-home-dir=/data/.allorad
+      - --allora-chain-key-name=faceworker
+      - --allora-chain-topic-id=2
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data
+    env_file:
+      - .env
+    ports:
+      - "9010:9010"
+    depends_on:
+      - init_faceworker
+
+  faceworker-topic-1:
+    container_name: faceworker-topic-1
+    build: .
+    command:
+      - allora-node
+      - --role=worker
+      - --peer-db=/data/worker-topic-1/peer-database
+      - --function-db=/data/worker-topic-1/function-database
+      - --runtime-path=/app/runtime
+      - --runtime-cli=bls-runtime
+      - --workspace=/data/worker-topic-1/workspace
+      - --private-key=/data/worker-topic-1/key/priv.bin
+      - --log-level=debug
+      - --port=9011
+      - --boot-nodes=/dns4/head-0-p2p.edgenet.allora.network/tcp/32080/p2p/12D3KooWQgcJ4wiHBWE6H9FxZAVUn84ZAmywQdRk83op2EibWTiZ
+      - --topic=allora-topic-1-worker
+      - --allora-node-rpc-address=https://allora-rpc.edgenet.allora.network/
+      - --allora-chain-home-dir=/data/.allorad
+      - --allora-chain-key-name=faceworker
+      - --allora-chain-topic-id=1
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data
+    env_file:
+      - .env
+    ports:
+      - "9011:9011"
+    depends_on:
+      - init_faceworker

@@ -1,0 +1,11 @@
+faucet_url: https://faucet.edgenet.allora.network/
+name: faceworker
+worker:
+  address: allo13742ctlqeee7w29t055nfv49m45mm6s6vl9vvg
+  boot_nodes: /dns4/head-0-p2p.edgenet.allora.network/tcp/32050/p2p/12D3KooWQgcJ4wiHBWE6H9FxZAVUn84ZAmywQdRk83op2EibWTiZ,/dns4/head-0-p2p.edgenet.allora.network/tcp/32080/p2p/12D3KooWQgcJ4wiHBWE6H9FxZAVUn84ZAmywQdRk83op2EibWTiZ,/dns4/head-1-p2p.edgenet.allora.network/tcp/32081/p2p/12D3KooWCyao1YJ9DDZEAV8ZUZ1MLLKbcuxVNju1QkTVpanN9iku,/dns4/head-2-p2p.edgenet.allora.network/tcp/32082/p2p/12D3KooWKZYNUWBjnAvun6yc7EBnPvesX23e5F4HGkEk1p5Q7JfK
+  chain_rpc_address: https://allora-rpc.edgenet.allora.network/
+  chain_topic_id: 2
+  hex_coded_pk: dc558c9925e4fe830a666bfcde6804d759a7703ad1bd1530cf6cb080a7086410
+  mnemonic: symptom sadness child city ribbon segment depend hurry quick guide dry
+    knee uncle infant spell coconut curtain demand cover expect angry danger junior
+    fence
